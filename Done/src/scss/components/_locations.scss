@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather&display=swap');
+
+.locations-page {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at bottom, #0b0c10 0%, #000000 100%);
+  background-image: url("https://media.tenor.com/TZaIBNauQfAAAAAM/stars-galaxy.gif");
+  padding: 40px;
+  font-family: 'Merriweather', serif;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  color: #fff;
+}
+
+.loading-text {
+  color: #fff;
+  text-align: center;
+  font-size: 1.5rem;
+  margin-top: 50px;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+  max-width: 1400px;
+  width: 100%;
+}
+
+.card {
+  background: rgba(15, 15, 15, 0.8);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 0 15px #00c8ffcc;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  h3 {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    letter-spacing: 0.05em;
+  }
+
+  p {
+    font-size: 1rem;
+    opacity: 0.85;
+    line-height: 1.4;
+  }
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 0 30px #00c8ffcc;
+  }
+}

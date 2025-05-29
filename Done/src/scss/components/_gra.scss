@@ -1,0 +1,112 @@
+/* Kolory nagłówków */
+h2, h3, h4 {
+  color: #ffffff;
+  margin: 0 0 10px 0;
+}
+
+/* Kontener dla ekranu wyboru i walki */
+.game-selection-screen,
+.game-battle {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 15px;
+  background: #222;
+  color: #eee;
+  border-radius: 8px;
+  text-align: center;
+  font-family: "Arial", sans-serif;
+
+  .game-combatants {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 15px;
+
+    div {
+      flex: 1 1 45%;
+      background: #333;
+      margin: 0 10px;
+      border-radius: 8px;
+      padding: 10px;
+
+      img.character-image {
+        width: 100%;
+        max-width: 150px;
+        height: auto;
+        border-radius: 8px;
+        margin-bottom: 10px;
+      }
+
+      h3 {
+        margin: 5px 0;
+        font-size: 1.4rem;
+      }
+
+      p {
+        margin: 3px 0;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .game-message {
+    margin: 20px 0;
+    font-size: 1.2rem;
+    min-height: 40px;
+    padding: 0 10px;
+  }
+
+  .action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+
+    button {
+      padding: 10px 20px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      min-width: 140px;
+    }
+
+    .game-attack-btn {
+      background-color: #e53935;
+      color: white;
+
+      &:hover:not(:disabled) {
+        background-color: #b71c1c;
+      }
+    }
+
+    .game-potion-btn {
+      background-color: #43a047;
+      color: white;
+
+      &:disabled {
+        background-color: #888;
+        cursor: not-allowed;
+      }
+
+      &:hover:not(:disabled) {
+        background-color: #2e7d32;
+      }
+    }
+  }
+
+  .game-restart-btn {
+    margin-top: 25px;
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    background-color: #ff9800;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #ef6c00;
+    }
+  }
+}

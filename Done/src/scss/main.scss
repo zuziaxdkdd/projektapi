@@ -1,0 +1,14 @@
+@import "./reset";
+@import "./variables";
+@import "./mixins";
+@import "./body";
+// ----------------------------------
+@import "./components/header";
+
+@import "./components/footer";
+// ----------------------------------
+@import "./components/home";
+@import "./components/gra";
+@import "./components/episodes";
+@import "./components/locations";
+@import "./components/characters";
