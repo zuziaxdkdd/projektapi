@@ -7,42 +7,22 @@ function GameCharacterCard({ character, onSelect, disabled, index, onImageError 
   const imageUrl = `https://images.weserv.nl/?url=${encodeURIComponent(
     character.img.replace(/^https?:\/\//, "")
   )}`;
+
   return (
     <div
       className={`game-card ${disabled ? "game-card--disabled" : ""}`}
       onClick={() => !disabled && onSelect(character)}
-      style={{
-        userSelect: "none",
-        cursor: disabled ? "default" : "pointer",
-        width: 140,
-        margin: 8,
-        background: "#1e1e1e",
-        borderRadius: 10,
-        boxShadow: "0 0 8px #333",
-        padding: 12,
-        textAlign: "center",
-        color: "#ffd600",
-      }}
     >
       <img
         src={imageUrl}
         alt={character.name}
         onError={() => onImageError(index)}
-        style={{
-          borderRadius: 8,
-          width: 120,
-          height: 120,
-          objectFit: "cover",
-          marginBottom: 10,
-          display: "block",
-          marginLeft: "auto",
-          marginRight: "auto",
-        }}
+        className="game-card__image"
       />
-      <h4 style={{ margin: "0 0 6px 0" }}>{character.name}</h4>
-      <p style={{ margin: "2px 0" }}>HP: {character.hp}</p>
-      <p style={{ margin: "2px 0" }}>Atak: {character.attack}</p>
-      <p style={{ margin: "2px 0" }}>Obrona: {character.defense}</p>
+      <h4 className="game-card__name">{character.name}</h4>
+      <p className="game-card__stat">HP: {character.hp}</p>
+      <p className="game-card__stat">Atak: {character.attack}</p>
+      <p className="game-card__stat">Obrona: {character.defense}</p>
     </div>
   );
 }
@@ -149,14 +129,17 @@ function GameBattle({ player, enemy, onRestart }) {
   const chance = Math.random();
 
   if (chance < 0.5) {
+    //50% na eliksir ktory dodaje 40
     const healAmount = 40;
     setPlayerHP(hp => Math.min(hp + healAmount, maxPlayerHP));
     setMessage(`Użyłeś eliksiru i odzyskałeś ${healAmount} HP!`);
   } else if (chance < 0.7) {
+    //20% na eliksir ktory dodaje 70
     const healAmount = 70;
     setPlayerHP(hp => Math.min(hp + healAmount, maxPlayerHP));
     setMessage(`Użyłeś mocnego eliksiru i odzyskałeś ${healAmount} HP!`);
   } else {
+    //30% na eliksir ktory odejmuje 15
     const damage = 15;
     setPlayerHP(hp => Math.max(hp - damage, 0));
     setMessage(`Eliksir był skażony! Straciłeś ${damage} HP!`);
@@ -362,62 +345,51 @@ export default function GameRPG() {
     setDifficultyLevel(null);
   };
 
-  if (loading) return <p style={{ textAlign: "center", fontSize: 24, color: "#ffd600" }}>Ładowanie gry...</p>;
+  if (loading) return <p className="loading-text">Ładowanie gry...</p>;
 
-  if (!player) {
-    return (
-      <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
-        <h2 style={{ color: "#ffd600" }}>Wybierz swoją postać</h2>
-        <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
-          {characters.map((char, i) =>
-            brokenImages.has(i) ? null : (
-              <GameCharacterCard
-                key={char.name}
-                character={char}
-                index={i}
-                onSelect={handleSelectCharacter}
-                onImageError={(index) => setBrokenImages((prev) => new Set(prev).add(index))}
-              />
-            )
-          )}
-        </div>
+if (!player) {
+  return (
+    <div className="character-selection-screen">
+      <h2>Wybierz swoją postać</h2>
+      <div className="character-grid">
+        {characters.map((char, i) =>
+          brokenImages.has(i) ? null : (
+            <GameCharacterCard
+              key={char.name}
+              character={char}
+              index={i}
+              onSelect={handleSelectCharacter}
+              onImageError={(index) => setBrokenImages((prev) => new Set(prev).add(index))}
+            />
+          )
+        )}
       </div>
-    );
-  }
+    </div>
+  );
+}
 
-  if (player && enemy === null) {
-    return (
-      <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
-        <h2 style={{ color: "#ffd600" }}>Wybierz poziom trudności</h2>
-        <div style={{ display: "flex", justifyContent: "center", gap: 20 }}>
-          {titanDifficulties.map((diff, idx) => (
-            <button
-              key={diff.name}
-              onClick={() => handleSelectDifficulty(idx)}
-              style={{
-                backgroundColor: difficultyLevel === idx ? "#ffc107" : "#222",
-                color: difficultyLevel === idx ? "#222" : "#ffd600",
-                border: "none",
-                padding: "10px 20px",
-                borderRadius: 10,
-                cursor: "pointer",
-                fontWeight: "bold",
-                fontSize: "1rem",
-                boxShadow: difficultyLevel === idx ? "0 0 8px #ffc107" : "none",
-                transition: "all 0.3s ease",
-              }}
-            >
-              {diff.name}
-            </button>
-          ))}
-        </div>
+if (player && enemy === null) {
+  return (
+    <div className="difficulty-selection-screen">
+      <h2>Wybierz poziom trudności</h2>
+      <div className="difficulty-buttons">
+        {titanDifficulties.map((diff, idx) => (
+          <button
+            key={diff.name}
+            onClick={() => handleSelectDifficulty(idx)}
+            className={`difficulty-button ${difficultyLevel === idx ? 'selected' : ''}`}
+          >
+            {diff.name}
+          </button>
+        ))}
       </div>
-    );
-  }
+    </div>
+  );
+}
 
-  if (player && enemy) {
-    return <GameBattle player={player} enemy={enemy} onRestart={resetGame} />;
-  }
+if (player && enemy) {
+  return <GameBattle player={player} enemy={enemy} onRestart={resetGame} />;
+}
 
-  return null;
+return null;
 }
